@@ -1,0 +1,21 @@
+#!/usr/bin/env sh 
+dwl-bar &
+#someblocks &
+#waybar &
+#sleep 5 &
+foot --server &
+
+## deps for  forecast
+location="Vapi" ## TYPE YOUR CITY NAME WITHIN QUOTES
+while : ;do curl -s 'http://v1.wttr.in/$location\?MT' | tail -n33 | head -n30 > /tmp/asciiwttr;sleep 1801;done &
+
+##dzenConky=$(pgrep -a conky | awk '/dwl-dzen-unifiedConky/{print $1}')
+
+conky -c ~/.conky/dwl-dzen-unifiedConky | dzen2 -p -x 705 -y 0 -w 676 -h 14 -ta r -fn 'Hack Nerd Font:pixelsize=9:antialias=true' -bg "#0a0e22" -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' &
+
+#swaybg -o 'eDP-1' -i "$HOME/Pictures/Wallpapers/wayland_2k.png" -m fill & # using swaybg backend to set wallpaper in wlroots
+wbg $HOME/Pictures/Wallpapers/AI-Sunrise-At-Northernlights.png &
+'/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)' &
+# MPD daemon start [if no other instance exist]
+[ ! -s ~/.config/mpd/pid ] && mpd &
+#udisksctl mount -b /dev/sda7
